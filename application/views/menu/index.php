@@ -15,7 +15,9 @@
 
             <!-- if set session for success add new menu -->
             <?= $this->session->flashdata('message'); ?>
+            <div class="setData">
 
+            </div>
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -32,8 +34,8 @@
                         <th scope="row"><?= $i ?></th>
                         <td><?= $m['menu'] ?></td>
                         <td>
-                            <a href="" class="badge badge-success editData" data-toggle="modal" data-target="#newMenuModal">Edit</a>
-                            <a href="<?= base_url('menu/delete/' . $m['id']) ?>" class="badge badge-danger deleteData" data-toggle="modal" data-target="#newMenuModal">Delete</a>
+                            <a href="" class="badge badge-success editData" data-toggle="modal" data-target="#newMenuModal" data-id="<?= $m['id'] ?>">Edit</a>
+                            <a href="" class="badge badge-danger deleteData" data-toggle="modal" data-target="#newMenuModal" data-id="<?= $m['id'] ?>">Delete</a>
                         </td>
                     </tr>
 
@@ -61,9 +63,17 @@
                 </button>
             </div>
             <form action="<?= base_url('menu') ?>" method="post">
+                <input type="hidden" name="id" id="id" value="">
                 <div class="modal-body">
                     <div class="form-group">
                         <input type="text" class="form-control" id="menu" name="menu" placeholder="Menu name">
+                    </div>
+                    <div class="form-group">
+                        <select name="role_id" id="role_id" class="form-control">
+                            <?php foreach ($role as $r) : ?>
+                            <option value="<?= $r['id'] ?>"><?= $r['role'] ?></option>
+                            <?php endforeach; ?>
+                        </select>
                     </div>
                 </div>
                 <div class="modal-footer">

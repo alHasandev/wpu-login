@@ -19,7 +19,10 @@ class Menu extends CI_Controller
         // get all data from table user_menu
         $data['menu'] = $this->menu->getMenu();
 
-        // make rule 
+        // get all data from table user_role
+        $data['role'] = $this->menu->getRole();
+
+        // set rule form validation 
         $this->form_validation->set_rules('menu', 'Menu', 'required');
 
         // if form validation is false
@@ -37,6 +40,90 @@ class Menu extends CI_Controller
             // set flashdata for success insert
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New menu added!</div>');
             redirect('menu');
+        }
+    }
+
+    public function getDataMenu()
+    {
+        echo json_encode($this->menu->getMenu($this->input->post('id')));
+    }
+
+    public function editMenu()
+    {
+        // set rule form validation 
+        $this->form_validation->set_rules('menu', 'Menu', 'required');
+
+        // if form validation is false
+        if ($this->form_validation->run() == false) {
+            echo "isi dulu bro";
+        } else {
+            // set conditional id 
+            $id = [
+                'id' => $this->input->post('id')
+            ];
+
+            // set data
+            $data = [
+                'menu' => $this->input->post('menu')
+            ];
+
+            // edit data where id = conditional id
+            if ($this->menu->edit('user_menu', $data, $id)) {
+                // set flashdata for success insert
+                $this->session->set_flashdata(
+                    'message',
+                    '<div class="alert alert-success" role="alert">Menu updated successfully!</div>'
+                );
+
+                redirect('menu');
+            } else {
+
+                // set flashdata for success insert
+                $this->session->set_flashdata(
+                    'message',
+                    '<div class="alert alert-danger" role="alert">Menu failed to update!</div>'
+                );
+
+                redirect('menu');
+            }
+        }
+    }
+
+    public function deleteMenu()
+    {
+        // set rule form validation 
+        $this->form_validation->set_rules('id', 'ID', 'required');
+
+        // if form validation is false
+        if ($this->form_validation->run() == false) {
+            echo validation_errors();
+        } else {
+
+            // set conditional id 
+            $id = [
+                'id' => $this->input->post('id')
+            ];
+
+            // delete data where id = conditional id
+            if ($this->menu->delete('user_menu', $id)) {
+
+                // set flashdata for success insert
+                $this->session->set_flashdata(
+                    'message',
+                    '<div class="alert alert-success" role="alert">Menu deleted successfully!</div>'
+                );
+
+                redirect('menu');
+            } else {
+
+                // set flashdata for success insert
+                $this->session->set_flashdata(
+                    'message',
+                    '<div class="alert alert-danger" role="alert">Menu failed to deleted!</div>'
+                );
+
+                redirect('menu');
+            }
         }
     }
 
