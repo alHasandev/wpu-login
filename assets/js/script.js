@@ -3,7 +3,7 @@ $(function () {
 	var pageURL = $(location).attr("href");
 	var title = $('#modalTitle').html();
 	var baseUrl = $('.modal-content form').attr('action');
-	var theInput = '<input type="text" class="form-control" id="menu" name="menu" placeholder="Menu name">';
+	// var theInput = '<input type="text" class="form-control" id="menu" name="menu" placeholder="Menu name">';
 
 	// make function for store appropriate data 
 	// function getData(id) {
@@ -18,8 +18,10 @@ $(function () {
 		$('#submitModal').html('Edit');
 		$('.modal-content form').attr("action", baseUrl + "/edit" + title);
 
-		// get data from php controller using ajax
+		// assigning selected data id to constant id 
 		const id = $(this).data('id');
+
+		// get data from php controller using ajax
 		$.ajax({
 			url: pageURL + '/getDataMenu/',
 			data: {
@@ -28,7 +30,7 @@ $(function () {
 			method: 'POST',
 			dataType: 'json',
 			success: function (data) {
-				$('.form-group #menu').val(data.menu)
+				$('#newMenuModal .form-group #menu').val(data.menu)
 			}
 		});
 	});
@@ -39,18 +41,18 @@ $(function () {
 		$('#submitModal').html('Add');
 		$('.modal-content form').attr("action", baseUrl);
 
-		// $('.form-group').html(theInput);
+		$('#newMenuModal .form-group #menu').val("");
 	});
 
 	// if user click delete button
 	$('.deleteData').on('click', function () {
-		$('#id').val($(this).data('id'));
-		$('#modalTitle').html('Delete ' + title);
-		$('#submitModal').html('Delete');
+		$('#deleteId').val($(this).data('id'));
 		$('.modal-content form').attr("action", baseUrl + "/delete" + title);
 
-		// get data from php controller using ajax
+		// assigning selected data id to constant id 
 		const id = $(this).data('id');
+
+		// get data from php controller using ajax
 		$.ajax({
 			url: pageURL + '/getDataMenu/',
 			data: {
@@ -59,7 +61,7 @@ $(function () {
 			method: 'POST',
 			dataType: 'json',
 			success: function (data) {
-				$('.modal-body').html(
+				$('#deleteMenuModal .modal-body p').html(
 					'Are you sure want to delete this Menu : <b>' + data.menu + '</b> ?'
 				)
 			}

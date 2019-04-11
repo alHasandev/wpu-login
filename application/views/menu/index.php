@@ -30,16 +30,20 @@
                     <?php $i = 1; ?>
                     <?php foreach ($menu as $m) : ?>
 
-                    <tr>
-                        <th scope="row"><?= $i ?></th>
-                        <td><?= $m['menu'] ?></td>
-                        <td>
-                            <a href="" class="badge badge-success editData" data-toggle="modal" data-target="#newMenuModal" data-id="<?= $m['id'] ?>">Edit</a>
-                            <a href="" class="badge badge-danger deleteData" data-toggle="modal" data-target="#newMenuModal" data-id="<?= $m['id'] ?>">Delete</a>
-                        </td>
-                    </tr>
+                        <tr>
+                            <th scope="row"><?= $i ?></th>
+                            <td><?= $m['menu'] ?></td>
+                            <td>
+                                <a href="" class="badge badge-success editData" data-toggle="modal" data-target="#newMenuModal" data-id="<?= $m['id'] ?>">
+                                    Edit
+                                </a>
+                                <a href="" class="badge badge-danger deleteData" data-toggle="modal" data-target="#deleteMenuModal" data-id="<?= $m['id'] ?>">
+                                    Delete
+                                </a>
+                            </td>
+                        </tr>
 
-                    <?php $i++; ?>
+                        <?php $i++; ?>
                     <?php endforeach; ?>
                 </tbody>
             </table>
@@ -52,7 +56,7 @@
 </div>
 <!-- End of Main Content -->
 
-<!-- Modal -->
+<!-- Modal for add and edit-->
 <div class="modal fade" id="newMenuModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -71,7 +75,7 @@
                     <div class="form-group">
                         <select name="role_id" id="role_id" class="form-control">
                             <?php foreach ($role as $r) : ?>
-                            <option value="<?= $r['id'] ?>"><?= $r['role'] ?></option>
+                                <option value="<?= $r['id'] ?>"><?= $r['role'] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
@@ -83,4 +87,31 @@
             </form>
         </div>
     </div>
-</div> 
+</div>
+
+<!-- Modal for delete -->
+<!-- Modal -->
+<div class="modal fade" id="deleteMenuModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Delete Menu</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="<?= base_url('menu') ?>" method="post">
+                <input type="hidden" name="id" id="deleteId" value="">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="submitModal">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

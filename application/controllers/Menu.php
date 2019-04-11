@@ -57,7 +57,7 @@ class Menu extends CI_Controller
         if ($this->form_validation->run() == false) {
             echo "isi dulu bro";
         } else {
-            // set conditional id 
+            // set variable id for condition
             $id = [
                 'id' => $this->input->post('id')
             ];
@@ -91,48 +91,45 @@ class Menu extends CI_Controller
 
     public function deleteMenu()
     {
-        // set rule form validation 
-        $this->form_validation->set_rules('id', 'ID', 'required');
 
-        // if form validation is false
-        if ($this->form_validation->run() == false) {
-            echo validation_errors();
+        // set variable id for condition
+        $id = [
+            'id' => $this->input->post('id')
+        ];
+
+        // delete data where id = conditional id
+        if ($this->menu->delete('user_menu', $id)) {
+
+            // set flashdata for success insert
+            $this->session->set_flashdata(
+                'message',
+                '<div class="alert alert-success" role="alert">Menu deleted successfully!</div>'
+            );
+
+            // redirect to menu;
+            redirect('menu');
         } else {
 
-            // set conditional id 
-            $id = [
-                'id' => $this->input->post('id')
-            ];
+            // set flashdata for success insert
+            $this->session->set_flashdata(
+                'message',
+                '<div class="alert alert-danger" role="alert">Menu failed to deleted!</div>'
+            );
 
-            // delete data where id = conditional id
-            if ($this->menu->delete('user_menu', $id)) {
-
-                // set flashdata for success insert
-                $this->session->set_flashdata(
-                    'message',
-                    '<div class="alert alert-success" role="alert">Menu deleted successfully!</div>'
-                );
-
-                redirect('menu');
-            } else {
-
-                // set flashdata for success insert
-                $this->session->set_flashdata(
-                    'message',
-                    '<div class="alert alert-danger" role="alert">Menu failed to deleted!</div>'
-                );
-
-                redirect('menu');
-            }
+            // redirect to menu;
+            redirect('menu');
         }
     }
 
     public function submenu()
     {
         $data['title'] = 'Submenu Management';
+
+        // get data in one row
         $data['user'] = $this->db->get_where('user', ['email' =>
         $this->session->userdata('email')])->row_array();
 
+        // get all sub menu and menu
         $data['subMenu'] = $this->menu->getSubMenu();
         $data['menu'] = $this->menu->getMenu();
 
