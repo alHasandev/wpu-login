@@ -9,9 +9,9 @@
         <div class="col-lg-12">
             <!-- display if validation error -->
             <?php if (validation_errors()) : ?>
-            <div class="alert alert-danger" role="alert">
-                <?= validation_errors(); ?>
-            </div>
+                <div class="alert alert-danger" role="alert">
+                    <?= validation_errors(); ?>
+                </div>
             <?php endif; ?>
 
             <!-- add new menu to database -->
@@ -26,7 +26,7 @@
                         <th scope="col">#</th>
                         <th scope="col">Title</th>
                         <th scope="col">Menu</th>
-                        <th scope="col">Url</th>
+                        <th scope="col">URL</th>
                         <th scope="col">Icon</th>
                         <th scope="col">Active</th>
                         <th scope="col">Action</th>
@@ -36,20 +36,20 @@
                     <?php $i = 1; ?>
                     <?php foreach ($subMenu as $sm) : ?>
 
-                    <tr>
-                        <th scope="row"><?= $i ?></th>
-                        <td><?= $sm['title'] ?></td>
-                        <td><?= $sm['menu'] ?></td>
-                        <td><?= $sm['url'] ?></td>
-                        <td><i class="<?= $sm['icon'] ?>"></i></td>
-                        <td><?= $sm['is_active'] ? "active" : "non-active" ?></td>
-                        <td>
-                            <a href="" class="badge badge-success editData" data-toggle="modal" data-target="#newSubMenuModal">Edit</a>
-                            <a href="" class="badge badge-danger deleteData" data-toggle="modal" data-target="#newSubMenuModal">Delete</a>
-                        </td>
-                    </tr>
+                        <tr>
+                            <th scope="row"><?= $i ?></th>
+                            <td><?= $sm['title'] ?></td>
+                            <td><?= $sm['menu'] ?></td>
+                            <td><?= $sm['url'] ?></td>
+                            <td><i class="<?= $sm['icon'] ?>"></i></td>
+                            <td><?= $sm['is_active'] ? "active" : "non-active" ?></td>
+                            <td>
+                                <a href="" class="badge badge-success editData" data-toggle="modal" data-target="#newSubMenuModal">Edit</a>
+                                <a href="" class="badge badge-danger deleteData" data-toggle="modal" data-target="#deleteSubMenuModal">Delete</a>
+                            </td>
+                        </tr>
 
-                    <?php $i++; ?>
+                        <?php $i++; ?>
                     <?php endforeach; ?>
                 </tbody>
             </table>
@@ -62,7 +62,7 @@
 </div>
 <!-- End of Main Content -->
 
-<!-- Modal -->
+<!-- Modal for add and edit -->
 <div class="modal fade" id="newSubMenuModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -82,9 +82,9 @@
                             <option value="">Select menu</option>
                             <?php foreach ($menu as $m) : ?>
 
-                            <option value="<?= $m['id'] ?>">
-                                <?= $m['menu'] ?>
-                            </option>
+                                <option value="<?= $m['id'] ?>">
+                                    <?= $m['menu'] ?>
+                                </option>
 
                             <?php endforeach; ?>
                         </select>
@@ -111,4 +111,30 @@
             </form>
         </div>
     </div>
-</div> 
+</div>
+
+<!-- Modal for delete -->
+<div class="modal fade" id="deleteSubMenuModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Delete Sub Menu</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form action="<?= base_url('menu/submenu/delete') ?>" method="post">
+                <input type="hidden" name="id" id="deleteId" value="">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <p></p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" id="submitModal">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

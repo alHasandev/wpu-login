@@ -17,7 +17,7 @@
             ); ?>
 
             <!-- add new menu to database -->
-            <a href="" class="btn btn-primary mb-3 addData" data-toggle="modal" data-target="#newMenuModal">Add New Menu</a>
+            <a href="" class="btn btn-primary mb-3 addData" data-toggle="modal" data-target="#newRoleModal">Add New Menu</a>
 
             <!-- if set session for success add new menu -->
             <?= $this->session->flashdata('message'); ?>
@@ -26,22 +26,25 @@
                 <thead>
                     <tr>
                         <th scope="col">#</th>
-                        <th scope="col">Menu</th>
+                        <th scope="col">Role</th>
                         <th scope="col">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php $i = 1; ?>
-                    <?php foreach ($menu as $m) : ?>
+                    <?php foreach ($role as $r) : ?>
 
                         <tr>
                             <th scope="row"><?= $i ?></th>
-                            <td><?= $m['menu'] ?></td>
+                            <td><?= $r['role'] ?></td>
                             <td>
-                                <a href="" class="badge badge-success editData" data-toggle="modal" data-target="#newMenuModal" data-id="<?= $m['id'] ?>">
+                                <a href="<?= base_url('admin/roleaccess/') . $r['id'] ?>" class="badge badge-warning">
+                                    Access
+                                </a>
+                                <a href="" class="badge badge-success editData" data-toggle="modal" data-target="#newRoleModal" data-id="<?= $r['id'] ?>">
                                     Edit
                                 </a>
-                                <a href="" class="badge badge-danger deleteData" data-toggle="modal" data-target="#deleteMenuModal" data-id="<?= $m['id'] ?>">
+                                <a href="" class="badge badge-danger deleteData" data-toggle="modal" data-target="#deleteRoleModal" data-id="<?= $r['id'] ?>">
                                     Delete
                                 </a>
                             </td>
@@ -61,20 +64,20 @@
 <!-- End of Main Content -->
 
 <!-- Modal for add and edit-->
-<div class="modal fade" id="newMenuModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+<div class="modal fade" id="newRoleModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalTitle">Menu</h5>
+                <h5 class="modal-title" id="modalTitle">Role</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('menu') ?>" method="post">
+            <form action="<?= base_url('admin/role') ?>" method="post">
                 <input type="hidden" name="id" id="id" value="">
                 <div class="modal-body">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="menu" name="menu" placeholder="Menu name">
+                        <input type="text" class="form-control" id="role" name="role" placeholder="Role name">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -88,7 +91,7 @@
 
 <!-- Modal for delete -->
 <!-- Modal -->
-<div class="modal fade" id="deleteMenuModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+<div class="modal fade" id="deleteRoleModal" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">

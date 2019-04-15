@@ -7,6 +7,7 @@ class Menu extends CI_Controller
     {
         parent::__construct();
         $this->load->model('Menu_model', 'menu');
+        is_logged_in();
     }
 
     public function index()
@@ -103,22 +104,28 @@ class Menu extends CI_Controller
             // set flashdata for success insert
             $this->session->set_flashdata(
                 'message',
-                '<div class="alert alert-success" role="alert">Menu deleted successfully!</div>'
+                '<div class="alert alert-success alert-dismissible" role="alert">Menu deleted successfully!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                </div>'
             );
-
-            // redirect to menu;
-            redirect('menu');
         } else {
 
             // set flashdata for success insert
             $this->session->set_flashdata(
                 'message',
-                '<div class="alert alert-danger" role="alert">Menu failed to deleted!</div>'
+                '<div class="alert alert-danger alert-dismissible" role="alert">Menu failed to deleted!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                </div>'
             );
-
-            // redirect to menu;
-            redirect('menu');
         }
+
+
+        // redirect to menu;
+        redirect('menu');
     }
 
     public function submenu()
@@ -164,5 +171,25 @@ class Menu extends CI_Controller
             $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">New Submenu added!</div>');
             redirect('menu/submenu');
         }
+    }
+
+    public function access_menu()
+    {
+        // for data views
+        $data['title'] = 'Access Menu';
+        $data['user'] = $this->db->get_where('user', ['email' =>
+        $this->session->userdata('email')])->row_array();
+
+        // get all data from table user_menu
+        $data['menu'] = $this->menu->getMenu();
+
+        // get all data from table user_role
+        $data['role'] = $this->menu->getRole();
+
+        $this->load->view('templates/header', $data);
+        $this->load->view('templates/sidebar', $data);
+        $this->load->view('templates/topbar', $data);
+        $this->load->view('menu/index', $data);
+        $this->load->view('templates/footer');
     }
 }
