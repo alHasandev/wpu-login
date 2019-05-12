@@ -173,6 +173,45 @@ class Menu extends CI_Controller
         }
     }
 
+    public function deleteSubMenu()
+    {
+
+        // set variable id for condition
+        $id = [
+            'id' => $this->input->post('id')
+        ];
+
+        // delete data where id = conditional id
+        if ($this->menu->delete('user_sub_menu', $id)) {
+
+            // set flashdata for success insert
+            $this->session->set_flashdata(
+                'message',
+                '<div class="alert alert-success alert-dismissible" role="alert">SubMenu deleted successfully!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                </div>'
+            );
+        } else {
+
+            // set flashdata for success insert
+            $this->session->set_flashdata(
+                'message',
+                '<div class="alert alert-danger alert-dismissible" role="alert">SubMenu failed to deleted!
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+                </div>'
+            );
+        }
+
+
+        // redirect to menu;
+        redirect('menu/submenu');
+    }
+
+
     public function access_menu()
     {
         // for data views

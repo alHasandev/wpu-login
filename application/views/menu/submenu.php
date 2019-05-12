@@ -44,8 +44,8 @@
                             <td><i class="<?= $sm['icon'] ?>"></i></td>
                             <td><?= $sm['is_active'] ? "active" : "non-active" ?></td>
                             <td>
-                                <a href="" class="badge badge-success editData" data-toggle="modal" data-target="#newSubMenuModal">Edit</a>
-                                <a href="" class="badge badge-danger deleteData" data-toggle="modal" data-target="#deleteSubMenuModal">Delete</a>
+                                <a href="" class="badge badge-success editData" data-toggle="modal" data-target="#newSubMenuModal" data-id="<?= $sm['id'] ?>">Edit</a>
+                                <a href="" class="badge badge-danger deleteData" data-toggle="modal" data-target="#deleteSubMenuModal" data-id="<?= $sm['id'] ?>">Delete</a>
                             </td>
                         </tr>
 
@@ -67,12 +67,12 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalTitle">Sub Menu</h5>
+                <h5 class="modal-title" id="modalTitle">SubMenu</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('menu/submenu') ?>" method="post">
+            <form action="<?= base_url('menu') ?>" method="post">
                 <div class="modal-body">
                     <div class="form-group">
                         <input type="text" class="form-control" id="title" name="title" placeholder="Submenu title">
@@ -118,16 +118,16 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalTitle">Delete Sub Menu</h5>
+                <h5 class="modal-title" id="modalTitle">Delete SubMenu</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="<?= base_url('menu/submenu/delete') ?>" method="post">
+            <form action="<?= base_url('menu/delete') ?>" method="post">
                 <input type="hidden" name="id" id="deleteId" value="">
                 <div class="modal-body">
                     <div class="form-group">
-                        <p></p>
+                        <p>Are you sure you want delete this sub menu ?</p>
                     </div>
                 </div>
                 <div class="modal-footer">
