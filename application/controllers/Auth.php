@@ -101,7 +101,7 @@ class Auth extends CI_Controller
             $data = [
                 'name' => htmlspecialchars($this->input->post('name', true)),
                 'email' => $email,
-                'image' => 'male.jpg',
+                'image' => 'male.png',
                 'password' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT),
                 'role_id' => 2,
                 'is_active' => 0,
@@ -152,12 +152,12 @@ class Auth extends CI_Controller
                 'Click this link to verify your account : <a href="' . base_url() . 'auth/verify?email=' . $this->input->post('email') . '&token=' . urlencode($token) . '">Activate</a>'
             );
 
-            // if ($this->email->send()) {
-            //     return true;
-            // } else {
-            //     echo $this->email->print_debugger();
-            //     die;
-            // }
+            if ($this->email->send()) {
+                return true;
+            } else {
+                echo $this->email->print_debugger();
+                die;
+            }
         } else 
         if ($type == 'forgot') {
             $this->email->subject('Reset Password');
